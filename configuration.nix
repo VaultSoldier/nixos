@@ -1,24 +1,10 @@
 { config, pkgs, ... }:
 
 {
-  imports =
-    [
-      ./hosts/desktop/hardware-configuration.nix
-      ./modules/services/hyprland.nix
-      ./modules/services/games.nix
-      ./modules/services/kanata.nix
-      ./modules/services/neovim.nix
-      ./modules/services/podman.nix
-      ./modules/packages/cli.nix
-      ./modules/packages/gui.nix
-      ./modules/packages/code.nix
-    ];
+  boot.kernelPackages = pkgs.linuxPackages_latest;
+  nix.settings.experimental-features = [ "nix-command" "flakes" ];
 
-  hardware.bluetooth = {
-    enable = true;
-    powerOnBoot = true;
-  };
-
+  # Bootloader.
   boot = {
     plymouth = {
       enable = true;
@@ -50,21 +36,13 @@
     loader.timeout = 0;
   };
 
-  nix.settings.experimental-features = [ "nix-command" "flakes" ];
-
-  networking.hostName = "nixos";
-  networking.networkmanager.enable = true;
-  networking.wireless.iwd.enable = true;
-  networking.networkmanager.wifi.backend = "iwd";
-  services.resolved.enable = true;
-
-  networking.wireless.iwd.settings = {
-    IPv6 = {
-      Enabled = true;
-    };
-    Settings = {
-      AutoConnect = true;
-    };
+  security.rtkit.enable = true;
+  services.pipewire = {
+    enable = true;
+    alsa.enable = true;
+    alsa.support32Bit = true;
+    pulse.enable = true;
+    jack.enable = true;
   };
 
   time.timeZone = "Asia/Yekaterinburg";
@@ -82,27 +60,19 @@
     LC_TIME = "ru_RU.UTF-8";
   };
 
+  # Configure keymap in X11
   services.xserver.xkb = {
     layout = "us";
     variant = "";
   };
 
+  # Define a user account. Don't forget to set a password with ‘passwd’.
   users.users.vs = {
     isNormalUser = true;
-    createHome = true;
     description = "David";
-    extraGroups = [ "networkmanager" "wheel" "podman"];
+    extraGroups = [ "networkmanager" "wheel" "podman" ];
     packages = with pkgs; [];
   };
-
-  users.defaultUserShell = pkgs.zsh;
-
-  environment.sessionVariables = {
-    GTK_APPLICATION_PREFER_DARK_THEME = "1";
-    GTK_THEME = "Adwaita:dark";
-    NIXOS_OZONE_WL = "1";
-    GOPATH="$HOME/.local/share/go";
-  };      
 
   fonts.packages = with pkgs; [
     noto-fonts
@@ -116,13 +86,11 @@
   nixpkgs.config.allowUnfree = true;
   environment.systemPackages = with pkgs; [
     os-prober
+    ipset
     cryfs
     lm_sensors
     adw-gtk3
     xdg-user-dirs
-    wl-clipboard
-    copyq
-    oh-my-posh
     bibata-cursors
   ];
 
@@ -130,15 +98,8 @@
     enable = true;
     execWheelOnly = false;
   };
-
-  programs.uwsm.enable = true;
-  programs.zsh.enable = true;
-  programs.tmux.enable = true;
   
   services.udisks2.enable = true;
-  services.tailscale.enable = true;
-  services.tailscale.useRoutingFeatures = "client";
-
   services.flatpak.enable = true;
   systemd.services.flatpak-repo = {
     wantedBy = [ "multi-user.target" ];
@@ -147,6 +108,15 @@
       flatpak remote-add --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo
     '';
   };
+
+  # List packages installed in system profile. To search, run:
+  # $ nix search wget
+  environment.sessionVariables = {
+    GTK_APPLICATION_PREFER_DARK_THEME = "1";
+    GTK_THEME = "Adwaita:dark";
+    NIXOS_OZONE_WL = "1";
+    GOPATH="$HOME/.local/share/go";
+  };      
 
   xdg.portal = {
     enable = true;
@@ -173,16 +143,4 @@
     "application/x-rar" = "org.kde.ark.desktop";
     "application/x-7z-compressed" = "org.kde.ark.desktop";
   }; 
-
-  # Open ports in the firewall.
-  # networking.firewall.allowedTCPPorts = [ ... ];
-  networking.firewall.allowedUDPPorts = [ 41641 ];
-
-  # This value determines the NixOS release from which the default
-  # settings for stateful data, like file locations and database versions
-  # on your system were taken. It‘s perfectly fine and recommended to leave
-  # this value at the release version of the first install of this system.
-  # Before changing this value read the documentation for this option
-  # (e.g. man configuration.nix or on https://nixos.org/nixos/options.html).
-  system.stateVersion = "25.05"; # Did you read the comment?
 }

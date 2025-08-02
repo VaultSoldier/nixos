@@ -8,10 +8,15 @@
     prismlauncher
     nexusmods-app-unfree
     protontricks
-    protonup-qt
+    protonplus
   ];
 
-  programs.steam.enable = true;
+  programs.steam = {
+    enable = true;
+    remotePlay.openFirewall = true;
+    localNetworkGameTransfers.openFirewall = true;
+  };
+
   programs.steam.gamescopeSession.enable = true;
   programs.gamemode.enable = true;
 }

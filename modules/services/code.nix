@@ -2,9 +2,11 @@
 
 {
   environment.systemPackages = with pkgs; [
+    clang
+    gcc
     go
     nodejs
-    python3Full
+    python314Full
     uv
     sqlite
   ];

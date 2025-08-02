@@ -40,6 +40,10 @@
           # Replace the paths below with the appropriate device paths for your setup.
           # Use `ls /dev/input/by-path/` to find your keyboard devices.
           "/dev/input/by-path/pci-0000:10:00.0-usbv2-0:1.2:1.0-event-kbd"
+	  # Laptop
+	  "/dev/input/by-path/platform-i8042-serio-0-event-kbd"
+          # keyboards
+          "/dev/input/by-path/pci-0000:06:00.3-usbv2-0:1:1.0-event-kbd"
         ];
         extraDefCfg = "process-unmapped-keys yes";
         config = ''

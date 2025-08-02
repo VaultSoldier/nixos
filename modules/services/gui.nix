@@ -14,15 +14,15 @@ in {
     kitty
     neohtop
     mpv
-    # Replace the original winbox4 with the wrapped variant
     winbox4Wrapped
     bitwarden-desktop
+    amnezia-vpn
     filezilla
     qbittorrent
     dbeaver-bin
     chromium
+    firefox
     vesktop
-    nekoray
     telegram-desktop
     nextcloud-talk-desktop
     nextcloud-client
@@ -30,4 +30,14 @@ in {
     rustdesk-flutter
     obsidian
   ];
+
+  # Nekoray
+  programs.nekoray.enable = true;
+  programs.nekoray.tunMode.enable = true;
+
+  # VirtualBox
+  virtualisation.virtualbox.host.enable = true;
+  virtualisation.virtualbox.host.enableKvm = true;
+  virtualisation.virtualbox.host.addNetworkInterface = false;
+  users.extraGroups.vboxusers.members = [ "vs" ];
 }

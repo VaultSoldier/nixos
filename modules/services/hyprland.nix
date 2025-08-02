@@ -30,6 +30,7 @@
     qt5.qtwayland
     playerctl
     blueman 
+    adwaita-icon-theme # gnome icons for apps
     iwgtk
     dunst
     hyprlock
@@ -39,6 +40,8 @@
     rofi-wayland
     adwaita-qt
     kdePackages.discover
+    wl-clipboard
+    copyq
 
     # Hyprshot
     hyprshot
@@ -68,6 +71,7 @@
     icoutils
   ];
 
+  programs.uwsm.enable = true;
   programs.hyprland = {
     enable = true;
     withUWSM = true;
