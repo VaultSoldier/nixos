@@ -1,7 +1,31 @@
 { config, pkgs, ... }:
 
 {
-  boot.initrd.luks.devices."luks-48cb7628-9c63-4be2-8f34-b346002bc0aa".device = "/dev/disk/by-uuid/48cb7628-9c63-4be2-8f34-b346002bc0aa";
+  # Bootloader.
+  boot = {
+    initrd.luks.devices."luks-48cb7628-9c63-4be2-8f34-b346002bc0aa".device = "/dev/disk/by-uuid/48cb7628-9c63-4be2-8f34-b346002bc0aa";
+
+    plymouth = {
+      enable = true;
+      themePackages = [ pkgs.mikuboot ];
+      theme = "mikuboot";
+    };
+    loader.systemd-boot.enable = true;
+    #loader.efi.canTouchEfiVariables = true;
+
+    # Enable "Silent boot"
+    consoleLogLevel = 3;
+    initrd.verbose = false;
+    kernelParams = [
+      "quiet"
+      "splash"
+      "boot.shell_on_fail"
+      "udev.log_priority=3"
+      "rd.systemd.show_status=auto"
+    ];
+    # Hide the OS choice for bootloaders.
+    loader.timeout = 0;
+  };
 
   # This value determines the NixOS release from which the default
   # settings for stateful data, like file locations and database versions

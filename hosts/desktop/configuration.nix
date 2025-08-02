@@ -1,6 +1,38 @@
 { config, pkgs, ... }:
 
 {
+  # Bootloader.
+  boot = {
+    plymouth = {
+      enable = true;
+      themePackages = [ pkgs.mikuboot ];
+      theme = "mikuboot";
+    };
+    #loader.systemd-boot.enable = true;
+    #loader.efi.canTouchEfiVariables = true;
+    loader = {
+      efi.canTouchEfiVariables = true;
+      grub = {
+        enable = true;
+        devices = [ "nodev" ];
+        efiSupport = true;
+        useOSProber = true;
+      };
+    };
+    # Enable "Silent boot"
+    consoleLogLevel = 3;
+    initrd.verbose = false;
+    kernelParams = [
+      "quiet"
+      "splash"
+      "boot.shell_on_fail"
+      "udev.log_priority=3"
+      "rd.systemd.show_status=auto"
+    ];
+    # Hide the OS choice for bootloaders.
+    loader.timeout = 0;
+  };
+
   # This value determines the NixOS release from which the default
   # settings for stateful data, like file locations and database versions
   # on your system were taken. It‘s perfectly fine and recommended to leave

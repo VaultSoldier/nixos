@@ -4,38 +4,6 @@
   boot.kernelPackages = pkgs.linuxPackages_latest;
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
 
-  # Bootloader.
-  boot = {
-    plymouth = {
-      enable = true;
-      themePackages = [ pkgs.mikuboot ];
-      theme = "mikuboot";
-    };
-    #loader.systemd-boot.enable = true;
-    #loader.efi.canTouchEfiVariables = true;
-    loader = {
-      efi.canTouchEfiVariables = true;
-      grub = {
-        enable = true;
-        devices = [ "nodev" ];
-        efiSupport = true;
-        useOSProber = true;
-      };
-    };
-    # Enable "Silent boot"
-    consoleLogLevel = 3;
-    initrd.verbose = false;
-    kernelParams = [
-      "quiet"
-      "splash"
-      "boot.shell_on_fail"
-      "udev.log_priority=3"
-      "rd.systemd.show_status=auto"
-    ];
-    # Hide the OS choice for bootloaders.
-    loader.timeout = 0;
-  };
-
   security.rtkit.enable = true;
   services.pipewire = {
     enable = true;
