@@ -28,12 +28,6 @@
     LC_TIME = "ru_RU.UTF-8";
   };
 
-  # Configure keymap in X11
-  services.xserver.xkb = {
-    layout = "us";
-    variant = "";
-  };
-
   # Define a user account. Don't forget to set a password with ‘passwd’.
   users.users.vs = {
     isNormalUser = true;
@@ -96,19 +90,38 @@
     "inode/directory" = "org.kde.dolphin.desktop";
     "x-scheme-handler/terminal" = "kitty.desktop";
 
-    # BROWSER
-    "text/html" = "app.zen_browser.zen.desktop";
-    "x-scheme-handler/http" = "app.zen_browser.zen.desktop";
-    "x-scheme-handler/https" = "app.zen_browser.zen.desktop";
-    "x-scheme-handler/about" = "app.zen_browser.zen.desktop";
-    "x-scheme-handler/unknown" = "app.zen_browser.zen.desktop";
+    ### BROWSER ###
+    # "text/html" = "app.zen_browser.zen.desktop";
+    # "x-scheme-handler/http" = "app.zen_browser.zen.desktop";
+    # "x-scheme-handler/https" = "app.zen_browser.zen.desktop";
+    # "x-scheme-handler/about" = "app.zen_browser.zen.desktop";
+    # "x-scheme-handler/unknown" = "app.zen_browser.zen.desktop";
 
-    # ARCHIVES
+    "x-scheme-handler/chrome" = "zen-beta.desktop";
+    "x-scheme-handler/http" = "zen-beta.desktop";
+    "x-scheme-handler/https" = "zen-beta.desktop";
+    "application/x-extension-htm" = "zen-beta.desktop";
+    "application/x-extension-html" = "zen-beta.desktop";
+    "application/x-extension-shtml" = "zen-beta.desktop";
+    "application/x-extension-xht" = "zen-beta.desktop";
+    "application/x-extension-xhtml" = "zen-beta.desktop";
+    "application/xhtml+xml" = "zen-beta.desktop";
+    "text/html" = "zen-beta.desktop";
+
+    ### ARCHIVES ###
     "application/zip" = "org.kde.ark.desktop";
     "application/x-compressed-tar" = "org.kde.ark.desktop";
     "application/x-bzip-compressed-tar" = "org.kde.ark.desktop";
     "application/x-xz-compressed-tar" = "org.kde.ark.desktop";
     "application/x-rar" = "org.kde.ark.desktop";
     "application/x-7z-compressed" = "org.kde.ark.desktop";
+    
+    ### Media Player ###
+    "video/mp4" = "mpv.desktop";
+    "video/x-matroska" = "mpv.desktop";
+    "video/webm" = "mpv.desktop";
+    "audio/mpeg" = "mpv.desktop";
+    "audio/ogg" = "mpv.desktop";
+    "audio/wav" = "mpv.desktop";
   }; 
 }
