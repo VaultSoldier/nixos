@@ -16,7 +16,6 @@ in {
     mpv
     winbox4Wrapped
     bitwarden-desktop
-    amnezia-vpn
     filezilla
     qbittorrent
     dbeaver-bin
@@ -31,9 +30,11 @@ in {
     obsidian
   ];
 
+  programs.amnezia-vpn.enable = true;
+
   # Nekoray
-  programs.nekoray.enable = true;
   programs.nekoray.tunMode.enable = true;
+  programs.nekoray.enable = true;
 
   # VirtualBox
   virtualisation.virtualbox.host.enable = true;

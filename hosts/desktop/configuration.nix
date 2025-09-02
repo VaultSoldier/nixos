@@ -8,16 +8,9 @@
       themePackages = [ pkgs.mikuboot ];
       theme = "mikuboot";
     };
-    #loader.systemd-boot.enable = true;
-    #loader.efi.canTouchEfiVariables = true;
     loader = {
+      systemd-boot.enable = true;
       efi.canTouchEfiVariables = true;
-      grub = {
-        enable = true;
-        devices = [ "nodev" ];
-        efiSupport = true;
-        useOSProber = true;
-      };
     };
     # Enable "Silent boot"
     consoleLogLevel = 3;

@@ -1,7 +1,7 @@
 { config, pkgs, ... }:
 
 {
-  boot.kernelPackages = pkgs.linuxPackages_latest;
+  #boot.kernelPackages = pkgs.linuxPackages_latest;
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
 
   security.rtkit.enable = true;
@@ -42,6 +42,7 @@
     noto-fonts-emoji
     liberation_ttf
     nerd-fonts.jetbrains-mono
+    nerd-fonts.caskaydia-cove
   ];
 
   # $ nix search wget
@@ -50,8 +51,6 @@
     os-prober
     ipset
     cryfs
-    lm_sensors
-    adw-gtk3
     xdg-user-dirs
     bibata-cursors
   ];
